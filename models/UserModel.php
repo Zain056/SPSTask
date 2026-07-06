@@ -17,9 +17,19 @@ class UserModel {
             ]);
             return true;
         } catch (PDOException $e) {
-            if ($e->getCode() == 23000) { // Duplicate email error code
+            if ($e->getCode() == 23000) { // Duplicate email 
                 return "email_exists";
             }
+            return false;
+        }
+    }
+    public function getUserByEmail($email) {
+        try {
+            $sql = "SELECT * FROM users WHERE email = :email LIMIT 1";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute([':email' => $email]);
+            return $stmt->fetch(PDO::FETCH_ASSOC); 
+        } catch (PDOException $e) {
             return false;
         }
     }

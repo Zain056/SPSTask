@@ -1,7 +1,6 @@
 <?php
 class Database {
     public static function getConnection() {
-        // Securely parse the .env file
         $env = parse_ini_file(__DIR__ . '/../.env');
         
         $host = $env['DB_HOST'];
